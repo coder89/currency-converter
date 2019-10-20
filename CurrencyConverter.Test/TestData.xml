@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<testsuite>
+  <test>
+    <value>0</value>
+    <expectedOutput>zero dollars</expectedOutput>
+  </test>
+  <test>
+    <value>1</value>
+    <expectedOutput>one dollar</expectedOutput>
+  </test>
+  <test>
+    <value>2</value>
+    <expectedOutput>two dollars</expectedOutput>
+  </test>
+  <test>
+    <value>25,1</value>
+    <expectedOutput>twenty-five dollars and ten cents</expectedOutput>
+  </test>
+  <test>
+    <value>0,01</value>
+    <expectedOutput>zero dollars and one cent</expectedOutput>
+  </test>
+  <test>
+    <value>0,02</value>
+    <expectedOutput>zero dollars and two cents</expectedOutput>
+  </test>
+  <test>
+    <value>45 100</value>
+    <expectedOutput>forty-five thousand one hundred dollars</expectedOutput>
+  </test>
+  <test>
+    <value>999 999 999,99</value>
+    <expectedOutput>nine hundred ninety-nine million nine hundred ninety-nine thousand nine hundred ninety-nine dollars and ninety-nine cents</expectedOutput>
+  </test>
+</testsuite>
