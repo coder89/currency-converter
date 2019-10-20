@@ -1,34 +1,44 @@
 ﻿namespace CurrencyConverter
 {
     using System;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Console app entrypoint.
     /// </summary>
     internal sealed class Program
     {
-        private static void Main()
+        private static async Task Main()
         {
+            InputManager inputManager = new InputManager();
             CurrencyConverter converter = new CurrencyConverter();
 
             do
             {
-                Console.Write("Provide number (press ENTER to exit): ");
-                string input = Console.ReadLine();
+                Console.Write("Provide number (press ESC to exit): ");
 
-                if (string.IsNullOrWhiteSpace(input))
+                var cts = new CancellationTokenSource();
+                Console.CancelKeyPress += (sender, args) =>
                 {
+                    cts.Cancel();
+                };
+
+                try
+                {
+                    decimal number = await inputManager.TryReadNumberAsync(cts.Token);
+                    string output = converter.ToText(number);
+                    Console.WriteLine(output);
+                }
+                catch (OperationCanceledException)
+                {
+                    Environment.Exit(0); // Ensures the app exits when Ctrl+C is pressed with debugger attached.
                     break;
                 }
-
-                if (!decimal.TryParse(input, out decimal number) || number < 0.0m || number > 999999999.99m)
+                catch (Exception e)
                 {
-                    Console.WriteLine("Invalid input. Try again.");
-                    continue;
+                    Console.WriteLine(e.Message);
                 }
-
-                string output = converter.ToText(number);
-                Console.WriteLine(output);
             }
             while (true);
         }
